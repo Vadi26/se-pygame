@@ -1,6 +1,9 @@
 import turtle
 import os
 
+# Global Variables
+is_paused = False
+
 wn = turtle.Screen()
 wn.title("Pong by VJ")
 wn.bgcolor("black")
@@ -51,6 +54,10 @@ pen.write(f"Player A : 0  Player B : 0", align="center", font=("Courier", 24, "n
 
 
 # Functions
+def toggle_pause():
+    global is_paused
+    is_paused = not is_paused
+
 def paddle_a_up():
     if (paddle_a.ycor() > 239):
         return
@@ -89,44 +96,46 @@ wn.onkeypress(paddle_a_up, "w")
 wn.onkeypress(paddle_a_down, "s")
 wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
+wn.onkeypress(toggle_pause, "p")
 
 # Main game loop
 while True:
     wn.update()
 
-    # Move the ball
-    ball.setx(ball.xcor() + ball.dx)
-    ball.sety(ball.ycor() + ball.dy)
+    if not is_paused:
+        # Move the ball
+        ball.setx(ball.xcor() + ball.dx)
+        ball.sety(ball.ycor() + ball.dy)
 
-    # Border Checking
-    if ball.ycor() > 290:
-        ball.sety(290)
-        ball.dy *= -1  # This line reverses the direction of the ball
-        # os.system("aplay Hehe.wav&")
+        # Border Checking
+        if ball.ycor() > 290:
+            ball.sety(290)
+            ball.dy *= -1  # This line reverses the direction of the ball
+            # os.system("aplay Hehe.wav&")
 
-    if ball.ycor() < -290:
-        ball.sety(-290)
-        ball.dy *= -1
+        if ball.ycor() < -290:
+            ball.sety(-290)
+            ball.dy *= -1
 
-    if ball.xcor() > 390:
-        ball.goto(0, 0)
-        ball.dx *= -1
-        score_a += 1
-        pen.clear()
-        pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+        if ball.xcor() > 390:
+            ball.goto(0, 0)
+            ball.dx *= -1
+            score_a += 1
+            pen.clear()
+            pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
 
-    if ball.xcor() < -390:
-        ball.goto(0, 0)
-        ball.dx *= -1
-        score_b += 1
-        pen.clear()
-        pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+        if ball.xcor() < -390:
+            ball.goto(0, 0)
+            ball.dx *= -1
+            score_b += 1
+            pen.clear()
+            pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
 
-    # Paddle and ball collision
-    if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 40 and ball.ycor() > paddle_b.ycor() - 40):
-        ball.setx(340)
-        ball.dx *= -1
+        # Paddle and ball collision
+        if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 40 and ball.ycor() > paddle_b.ycor() - 40):
+            ball.setx(340)
+            ball.dx *= -1
 
-    if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 40 and ball.ycor() > paddle_a.ycor() - 40):
-        ball.setx(-340)
-        ball.dx *= -1
+        if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 40 and ball.ycor() > paddle_a.ycor() - 40):
+            ball.setx(-340)
+            ball.dx *= -1
