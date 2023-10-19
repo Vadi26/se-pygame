@@ -52,24 +52,36 @@ pen.write(f"Player A : 0  Player B : 0", align="center", font=("Courier", 24, "n
 
 # Functions
 def paddle_a_up():
-    y = paddle_a.ycor()
-    y += 20
-    paddle_a.sety(y)
+    if (paddle_a.ycor() > 239):
+        return
+    else :
+        y = paddle_a.ycor()
+        y += 20
+        paddle_a.sety(y)
 
 def paddle_a_down():
-    y = paddle_a.ycor()
-    y -= 20
-    paddle_a.sety(y)
+    if (paddle_a.ycor() < -239):
+        return
+    else:
+        y = paddle_a.ycor()
+        y -= 20
+        paddle_a.sety(y)
 
 def paddle_b_up():
-    y = paddle_b.ycor()
-    y += 20
-    paddle_b.sety(y)
+    if (paddle_a.ycor() > 239):
+        return
+    else: 
+        y = paddle_b.ycor()
+        y += 20
+        paddle_b.sety(y)
 
 def paddle_b_down():
-    y = paddle_b.ycor()
-    y -= 20
-    paddle_b.sety(y)
+    if (paddle_a.ycor() < -239):
+        return
+    else :
+        y = paddle_b.ycor()
+        y -= 20
+        paddle_b.sety(y)
 
 # Keyboard binding
 wn.listen()
