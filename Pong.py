@@ -1,8 +1,7 @@
 import turtle
-import os
 
 # Global Variables
-is_paused = False
+is_paused = True
 
 wn = turtle.Screen()
 wn.title("Pong by VJ")
@@ -49,7 +48,7 @@ pen.color("white")
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 260)
-pen.write(f"Player A : 0  Player B : 0", align="center", font=("Courier", 24, "normal"))
+pen.write("Press any key to start", align="center", font=("Courier", 24, "normal"))
 
 # Functions
 def toggle_pause():
@@ -69,6 +68,11 @@ def reset_game():
     reset_positions()
     pen.clear()
     pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+
+def start_game():
+    global is_paused
+    is_paused = False
+    pen.clear()
 
 def paddle_a_up():
     if (paddle_a.ycor() > 239):
@@ -110,6 +114,7 @@ wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
 wn.onkeypress(toggle_pause, "p")
 wn.onkeypress(reset_game, "r")
+wn.onkeypress(start_game, "space")
 
 # Call reset_game function to initialize the game
 reset_game()
