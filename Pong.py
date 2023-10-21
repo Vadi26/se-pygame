@@ -4,7 +4,7 @@ import turtle
 is_paused = True
 
 wn = turtle.Screen()
-wn.title("Pong by VJ")
+wn.title("PLAY PONG")
 wn.bgcolor("black")
 wn.setup(width=800, height=600)
 wn.tracer(0)
@@ -48,7 +48,7 @@ pen.color("white")
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 260)
-pen.write("Press any key to start", align="center", font=("Courier", 24, "normal"))
+pen.write(f"Player A : 0  Player B : 0", align="center", font=("Courier", 24, "normal"))
 
 # Functions
 def toggle_pause():
@@ -68,11 +68,6 @@ def reset_game():
     reset_positions()
     pen.clear()
     pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
-
-def start_game():
-    global is_paused
-    is_paused = False
-    pen.clear()
 
 def paddle_a_up():
     if (paddle_a.ycor() > 239):
@@ -132,10 +127,14 @@ while True:
         if ball.ycor() > 290:
             ball.sety(290)
             ball.dy *= -1
+            current_color_index = (current_color_index + 1) % len(ball_colors)
+            ball.color(ball_colors[current_color_index])
 
         if ball.ycor() < -290:
             ball.sety(-290)
             ball.dy *= -1
+            current_color_index = (current_color_index + 1) % len(ball_colors)
+            ball.color(ball_colors[current_color_index])
 
         if ball.xcor() > 390:
             ball.goto(0, 0)
@@ -143,6 +142,8 @@ while True:
             score_a += 1
             pen.clear()
             pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+            current_color_index = (current_color_index + 1) % len(ball_colors)
+            ball.color(ball_colors[current_color_index])
 
         if ball.xcor() < -390:
             ball.goto(0, 0)
@@ -150,12 +151,18 @@ while True:
             score_b += 1
             pen.clear()
             pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+            current_color_index = (current_color_index + 1) % len(ball_colors)
+            ball.color(ball_colors[current_color_index])
 
         # Paddle and ball collision
         if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
             ball.setx(340)
             ball.dx *= -1
+            current_color_index = (current_color_index + 1) % len(ball_colors)
+            ball.color(ball_colors[current_color_index])
 
         if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
             ball.setx(-340)
             ball.dx *= -1
+            current_color_index = (current_color_index + 1) % len(ball_colors)
+            ball.color(ball_colors[current_color_index])
