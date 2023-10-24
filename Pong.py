@@ -52,6 +52,14 @@ pen.goto(0, 260)
 pen.write("Press SPACE KEY to start",align="center", font=("Courier",24,"normal"))
 pen.write(f"Player A : 0  Player B : 0", align="center", font=("Courier", 24, "normal"))
 
+start_button = turtle.Turtle()
+start_button.speed(0)
+start_button.color("white")
+start_button.penup()
+start_button.hideturtle()
+start_button.goto(0, -50)  # Position the button below the score display
+start_button.write("Start", align="center", font=("Courier", 24, "normal"))
+
 # List of ball colors
 ball_colors = ["blue", "red", "green", "yellow", "orange"]
 current_color_index = 0
@@ -74,10 +82,12 @@ def reset_game():
     reset_positions()
     pen.clear()
     pen.write("Player A : {}  Player B : {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+
 def start_game():
     global is_paused
-    is_paused=False
+    is_paused = False
     pen.clear()
+    start_button.clear()
     
 def paddle_a_up():
     if (paddle_a.ycor() > 239):
@@ -111,6 +121,10 @@ def paddle_b_down():
         y -= 20
         paddle_b.sety(y)
 
+def start_button_click(x, y):
+    if -40 < x < 40 and -80 < y < -20:
+        start_game()
+
 # Keyboard binding
 wn.listen()
 wn.onkeypress(paddle_a_up, "w")
@@ -120,6 +134,7 @@ wn.onkeypress(paddle_b_down, "Down")
 wn.onkeypress(toggle_pause, "p")
 wn.onkeypress(reset_game, "r")
 wn.onkeypress(start_game, "space")
+wn.onclick(start_button_click)
 
 # Call reset_game function to initialize the game
 reset_game()
